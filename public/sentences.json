@@ -1,0 +1,743 @@
+{
+    "Geography": {
+        "set1": {
+            "statements": [
+                "Mount Everest is the highest point on Earth.",
+                "The Amazon River is the longest river in the world.",
+                "Africa is the only continent located in all four hemispheres."
+            ],
+            "lie_index": 1
+        },
+        "set2": {
+            "statements": [
+                "Canada has the longest coastline of any country.",
+                "Russia spans 11 time zones.",
+                "Australia is the largest country in the world."
+            ],
+            "lie_index": 2
+        },
+        "set3": {
+            "statements": [
+                "The Sahara is the largest desert in the world.",
+                "Iceland has more volcanoes than any other country.",
+                "Lake Superior is the largest freshwater lake by surface area."
+            ],
+            "lie_index": 1
+        },
+        "set4": {
+            "statements": [
+                "There are no rivers in Saudi Arabia.",
+                "The Great Wall of China is visible from the Moon.",
+                "Vatican City is the smallest country in the world."
+            ],
+            "lie_index": 1
+        },
+        "set5": {
+            "statements": [
+                "Antarctica is a desert.",
+                "The equator passes through Kenya.",
+                "Japan is part of the European continent."
+            ],
+            "lie_index": 2
+        },
+        "set6": {
+        "statements": [
+            "The Nile River flows northward.",
+            "Asia is the most populous continent.",
+            "Greenland is a country."
+        ],
+        "lie_index": 2
+        },
+        "set7": {
+            "statements": [
+                "Mount Kilimanjaro is located in Kenya.",
+                "Lake Baikal is the deepest freshwater lake in the world.",
+                "The Andes is the longest mountain range on land."
+            ],
+            "lie_index": 0
+        },
+        "set8": {
+            "statements": [
+                "The Dead Sea is below sea level.",
+                "Europe is larger than Australia.",
+                "The capital of South Africa is Johannesburg."
+            ],
+            "lie_index": 2
+        },
+        "set9": {
+            "statements": [
+                "There are 7 continents.",
+                "The Pacific Ocean is the smallest ocean.",
+                "Mexico is part of North America."
+            ],
+            "lie_index": 1
+        },
+        "set10": {
+            "statements": [
+                "Tokyo is the most populous city in the world.",
+                "The Amazon rainforest is the largest tropical rainforest.",
+                "Norway is landlocked."
+            ],
+            "lie_index": 2
+        }
+    },
+    "Science": {
+        "set1": {
+            "statements": [
+                "Water boils at a lower temperature at high altitudes.",
+                "Humans have more than five senses.",
+                "Mercury is the hottest planet in our solar system."
+            ],
+            "lie_index": 2
+        },
+        "set2": {
+            "statements": [
+                "The speed of light is faster than the speed of sound.",
+                "DNA stands for Dynamic Nuclear Acid.",
+                "Humans share about 60% of their DNA with bananas."
+            ],
+            "lie_index": 1
+        },
+        "set3": {
+            "statements": [
+                "Lightning is hotter than the surface of the Sun.",
+                "Sound cannot travel in a vacuum.",
+                "Pluto is larger than Earth’s Moon."
+            ],
+            "lie_index": 2
+        },
+        "set4": {
+            "statements": [
+                "Oxygen is the most abundant gas in Earth’s atmosphere.",
+                "Frogs can breathe through their skin.",
+                "All metals are magnetic."
+            ],
+            "lie_index": 2
+        },
+        "set5": {
+            "statements": [
+                "The human body contains around 60% water.",
+                "An octopus has three hearts.",
+                "Plants do not respire, only photosynthesize."
+            ],
+            "lie_index": 2
+        },
+        "set6": {
+        "statements": [
+            "Atoms are mostly empty space.",
+            "The human body has four lungs.",
+            "Sound travels faster in water than in air."
+        ],
+        "lie_index": 1
+        },
+        "set7": {
+            "statements": [
+                "Helium is lighter than air.",
+                "All living things are made of cells.",
+                "Steel is an element."
+            ],
+            "lie_index": 2
+        },
+        "set8": {
+            "statements": [
+                "Electricity can be created using magnets.",
+                "Earth's core is solid iron only.",
+                "The boiling point of water is 100°C at sea level."
+            ],
+            "lie_index": 1
+        },
+        "set9": {
+            "statements": [
+                "Insects have three body parts.",
+                "The Earth orbits the Moon.",
+                "Light can behave as both a particle and a wave."
+            ],
+            "lie_index": 1
+        },
+        "set10": {
+            "statements": [
+                "Viruses are living organisms.",
+                "Glass is an amorphous solid.",
+                "Tides are caused primarily by the Moon’s gravity."
+            ],
+            "lie_index": 0
+        }
+        },
+    "Art & Literature": {
+        "set1": {
+            "statements": [
+                "Shakespeare invented over 1,700 words.",
+                "The Mona Lisa is painted on canvas.",
+                "1984 was written by George Orwell."
+            ],
+            "lie_index": 1
+        },
+        "set2": {
+            "statements": [
+                "Vincent van Gogh sold only one painting during his lifetime.",
+                "Pablo Picasso lived to be over 90 years old.",
+                "The novel Moby-Dick was originally titled Whale King."
+            ],
+            "lie_index": 2
+        },
+        "set3": {
+            "statements": [
+                "J.K. Rowling wrote under a pen name for The Cuckoo’s Calling.",
+                "The Starry Night was painted while van Gogh was in a mental asylum.",
+                "The Da Vinci Code was banned worldwide upon release."
+            ],
+            "lie_index": 2
+        },
+        "set4": {
+            "statements": [
+                "The Louvre is the most visited art museum in the world.",
+                "The Sistine Chapel ceiling was painted by Michelangelo.",
+                "Leonardo da Vinci sculpted the statue of David."
+            ],
+            "lie_index": 2
+        },
+        "set5": {
+            "statements": [
+                "Ernest Hemingway won a Nobel Prize in Literature.",
+                "Agatha Christie is the best-selling fiction author of all time.",
+                "All of Edgar Allan Poe’s works were published posthumously."
+            ],
+            "lie_index": 2
+        },
+        "set6": {
+            "statements": [
+            "The color blue was once more expensive than gold.",
+            "The Odyssey was written by Plato.",
+            "Van Gogh painted over 2,000 works in his lifetime."
+            ],
+            "lie_index": 1
+        },
+        "set7": {
+            "statements": [
+            "The Great Gatsby was written in the 20th century.",
+            "William Blake was a famous Renaissance sculptor.",
+            "War and Peace is a novel by Leo Tolstoy."
+            ],
+            "lie_index": 1
+        },
+        "set8": {
+            "statements": [
+            "Frankenstein was written by Mary Shelley.",
+            "Da Vinci was both an artist and inventor.",
+            "Romeo and Juliet was based on real people."
+            ],
+            "lie_index": 2
+        },
+        "set9": {
+            "statements": [
+            "The Sistine Chapel took over four years to paint.",
+            "Jane Austen published under her full name during her lifetime.",
+            "Don Quixote is considered the first modern novel."
+            ],
+            "lie_index": 1
+        },
+        "set10": {
+            "statements": [
+            "Edgar Allan Poe is known for horror and detective fiction.",
+            "Picasso was a leader of the Surrealist movement.",
+            "J.R.R. Tolkien wrote The Lord of the Rings."
+            ],
+            "lie_index": 1
+        }
+    },
+    "Pop Culture": {
+        "set1": {
+            "statements": [
+                "The Beatles originated in Liverpool.",
+                "Marvel's Avengers: Endgame is the highest-grossing film of all time.",
+                "The first Harry Potter film was released in 2005."
+            ],
+            "lie_index": 2
+        },
+        "set2": {
+            "statements": [
+                "Taylor Swift has won more Grammys than Beyoncé.",
+                "Friends aired for 10 seasons.",
+                "Game of Thrones is based on a book series."
+            ],
+            "lie_index": 0
+        },
+        "set3": {
+            "statements": [
+                "Netflix was founded in 1997.",
+                "The Simpsons is the longest-running scripted TV show in U.S. history.",
+                "The Oscars are awarded for achievements in television."
+            ],
+            "lie_index": 2
+        },
+        "set4": {
+            "statements": [
+                "Breaking Bad won multiple Emmy Awards.",
+                "BTS is a K-pop group from Japan.",
+                "The Marvel Cinematic Universe began with Iron Man."
+            ],
+            "lie_index": 1
+        },
+        "set5": {
+            "statements": [
+                "Michael Jackson was known as the “King of Pop.”",
+                "Rihanna performed at the Super Bowl halftime show.",
+                "Elvis Presley was born in California."
+            ],
+            "lie_index": 2
+        },
+        "set6": {
+    "statements": [
+      "Madonna is known as the Queen of Pop.",
+      "The movie Titanic was released in the 1990s.",
+      "Kanye West won an Oscar for acting."
+    ],
+    "lie_index": 2
+  },
+  "set7": {
+    "statements": [
+      "Beyoncé was a member of Destiny’s Child.",
+      "The Simpsons movie was released in 2005.",
+      "Tom Hanks voiced Woody in Toy Story."
+    ],
+    "lie_index": 1
+  },
+  "set8": {
+    "statements": [
+      "Avatar was directed by James Cameron.",
+      "Justin Bieber is from Australia.",
+      "Taylor Swift's fans are called Swifties."
+    ],
+    "lie_index": 1
+  },
+  "set9": {
+    "statements": [
+      "Drake is known for both acting and music.",
+      "Netflix started as a DVD rental service.",
+      "The Grammy Awards were first held in 2000."
+    ],
+    "lie_index": 2
+  },
+  "set10": {
+    "statements": [
+      "Leonardo DiCaprio won his first Oscar for Titanic.",
+      "SpongeBob SquarePants lives in a pineapple under the sea.",
+      "Billie Eilish was born in the 2000s."
+    ],
+    "lie_index": 0
+  }
+    },
+    "Space & Astronomy": {
+        "set1": {
+            "statements": [
+                "The Sun makes up more than 99% of the mass of our solar system.",
+                "A day on Venus is shorter than its year.",
+                "Jupiter has the fewest moons of any planet."
+            ],
+            "lie_index": 2
+        },
+        "set2": {
+            "statements": [
+                "Earth is the third planet from the Sun.",
+                "The Moon has no gravity.",
+                "There are galaxies with trillions of stars."
+            ],
+            "lie_index": 1
+        },
+        "set3": {
+            "statements": [
+                "Black holes can bend light.",
+                "Mars has the tallest volcano in the solar system.",
+                "Saturn is the only planet with rings."
+            ],
+            "lie_index": 2
+        },
+        "set4": {
+            "statements": [
+                "The Milky Way is one of billions of galaxies.",
+                "The universe is around 13.8 billion years old.",
+                "The Moon is made of cheese."
+            ],
+            "lie_index": 2
+        },
+        "set5": {
+            "statements": [
+                "Comets are made mostly of ice and dust.",
+                "Light from the Sun takes about 8 minutes to reach Earth.",
+                "Neptune is closer to the Sun than Uranus."
+            ],
+            "lie_index": 2
+        },
+        "set6": {
+    "statements": [
+      "The Sun is a star.",
+      "Mercury is the hottest planet in the solar system.",
+      "Uranus rotates on its side."
+    ],
+    "lie_index": 1
+  },
+  "set7": {
+    "statements": [
+      "A light-year measures distance.",
+      "Pluto is still officially classified as a planet.",
+      "A solar eclipse happens when the Moon blocks the Sun."
+    ],
+    "lie_index": 1
+  },
+  "set8": {
+    "statements": [
+      "Neutron stars are extremely dense.",
+      "Mars has two moons.",
+      "The Moon produces its own light."
+    ],
+    "lie_index": 2
+  },
+  "set9": {
+    "statements": [
+      "The Hubble Space Telescope orbits Earth.",
+      "Venus has a breathable atmosphere.",
+      "Stars are born in nebulae."
+    ],
+    "lie_index": 1
+  },
+  "set10": {
+    "statements": [
+      "Earth is the only known planet with life.",
+      "Saturn’s rings are made of rock and ice.",
+      "The speed of light is slower than the speed of sound."
+    ],
+    "lie_index": 2
+  }
+    },
+    "Biology": {
+        "set1": {
+            "statements": [
+                "The human brain is the most energy-consuming organ.",
+                "Blood is blue inside your body.",
+                "Some fungi glow in the dark."
+            ],
+            "lie_index": 1
+        },
+        "set2": {
+            "statements": [
+                "Your skin is your largest organ.",
+                "Humans can live without their spleen.",
+                "All animals have backbones."
+            ],
+            "lie_index": 2
+        },
+        "set3": {
+            "statements": [
+                "Dolphins sleep with one eye open.",
+                "Sloths can hold their breath longer than dolphins.",
+                "Birds are mammals."
+            ],
+            "lie_index": 2
+        },
+        "set4": {
+            "statements": [
+                "Bacteria can live in extreme environments like volcanoes.",
+                "Human nails keep growing after death.",
+                "Giraffes have more neck bones than humans."
+            ],
+            "lie_index": 2
+        },
+        "set5": {
+            "statements": [
+                "Elephants can’t jump.",
+                "A group of crows is called a murder.",
+                "All snakes are venomous."
+            ],
+            "lie_index": 2
+        },
+        "set6": {
+    "statements": [
+      "Humans share about 60% of their DNA with bananas.",
+      "All mammals give live birth.",
+      "Octopuses have three hearts."
+    ],
+    "lie_index": 1
+  },
+  "set7": {
+    "statements": [
+      "DNA stands for Deoxyribonucleic Acid.",
+      "The human heart has four chambers.",
+      "Bones are made entirely of calcium."
+    ],
+    "lie_index": 2
+  },
+  "set8": {
+    "statements": [
+      "Plants perform photosynthesis.",
+      "Spiders are insects.",
+      "Blood cells are produced in bone marrow."
+    ],
+    "lie_index": 1
+  },
+  "set9": {
+    "statements": [
+      "Penguins are birds.",
+      "Some jellyfish can live forever (biologically).",
+      "All frogs are poisonous."
+    ],
+    "lie_index": 2
+  },
+  "set10": {
+    "statements": [
+      "Mitochondria are the powerhouses of the cell.",
+      "Humans have 46 chromosomes.",
+      "Camels store water in their humps."
+    ],
+    "lie_index": 2
+  }
+        
+    },
+    "Math & Logic": {
+        "set1": {
+            "statements": [
+                "Zero is an even number.",
+                "A triangle always has angles that add up to 180 degrees.",
+                "A prime number is divisible by more than two numbers."
+            ],
+            "lie_index": 2
+        },
+        "set2": {
+            "statements": [
+                "Pi is an irrational number.",
+                "A billion is the same number worldwide.",
+                "The number 1 is considered a prime number."
+            ],
+            "lie_index": 2
+        },
+        "set3": {
+            "statements": [
+                "The square root of 49 is 7.",
+                "Infinity is a number.",
+                "Negative numbers were first used in ancient China."
+            ],
+            "lie_index": 1
+        },
+        "set4": {
+            "statements": [
+                "A circle has no corners.",
+                "Probability can be greater than 1.",
+                "Roman numerals do not include the number zero."
+            ],
+            "lie_index": 1
+        },
+        "set5": {
+            "statements": [
+                "The Fibonacci sequence begins with 0 and 1.",
+                "In base-10, 10 is written as 10.",
+                "The sum of any two odd numbers is always odd."
+            ],
+            "lie_index": 2
+        },
+        "set6": {
+    "statements": [
+      "A square is a rectangle.",
+      "An equation must always contain numbers.",
+      "The number 2 is the only even prime number."
+    ],
+    "lie_index": 1
+  },
+  "set7": {
+    "statements": [
+      "Multiplication is repeated addition.",
+      "A decagon has 10 sides.",
+      "The sum of angles in a square is 180°."
+    ],
+    "lie_index": 2
+  },
+  "set8": {
+    "statements": [
+      "A billion is 1,000 million in the U.S.",
+      "π (pi) is exactly equal to 22/7.",
+      "Algebra uses variables to represent numbers."
+    ],
+    "lie_index": 1
+  },
+  "set9": {
+    "statements": [
+      "In logic, a contradiction can be true and false.",
+      "Set theory is a branch of mathematics.",
+      "You can divide by zero in standard arithmetic."
+    ],
+    "lie_index": 2
+  },
+  "set10": {
+    "statements": [
+      "The golden ratio is approximately 1.618.",
+      "All prime numbers are odd.",
+      "A hexagon has six sides."
+    ],
+    "lie_index": 1
+  }
+        
+    },
+    "Technology": {
+        "set1": {
+            "statements": [
+                "The first iPhone was released in 2007.",
+                "Alan Turing invented the internet.",
+                "HTML is a markup language."
+            ],
+            "lie_index": 1
+        },
+        "set2": {
+            "statements": [
+                "QR stands for Quick Response.",
+                "Google was originally called Backrub.",
+                "The first computer was smaller than a microwave."
+            ],
+            "lie_index": 2
+        },
+        "set3": {
+            "statements": [
+                "The @ symbol was used in email since the beginning.",
+                "A terabyte is smaller than a gigabyte.",
+                "Wi-Fi does not require internet to work."
+            ],
+            "lie_index": 1
+        },
+        "set4": {
+            "statements": [
+                "Bitcoin is a type of cryptocurrency.",
+                "Virtual Reality was first introduced in the 2010s.",
+                "The first webcam watched a coffee pot."
+            ],
+            "lie_index": 1
+        },
+        "set5": {
+            "statements": [
+                "You can send a tweet up to 280 characters.",
+                "Steve Jobs co-founded Apple.",
+                "Android was created before the first personal computer."
+            ],
+            "lie_index": 2
+        },
+        "set6": {
+    "statements": [
+      "JavaScript is the same as Java.",
+      "Linux is an open-source operating system.",
+      "Bluetooth was named after a Viking king."
+    ],
+    "lie_index": 0
+  },
+  "set7": {
+    "statements": [
+      "A URL is a type of address on the internet.",
+      "HTML stands for HyperText Markup Language.",
+      "RAM is permanent storage on a computer."
+    ],
+    "lie_index": 2
+  },
+  "set8": {
+    "statements": [
+      "Smartphones contain GPS chips.",
+      "Spam emails were named after a comedy sketch.",
+      "Wi-Fi stands for Wireless Fidelity."
+    ],
+    "lie_index": 2
+  },
+  "set9": {
+    "statements": [
+      "The first website is still online.",
+      "Cloud computing involves using someone else's servers.",
+      "Touchscreens were invented after the iPhone."
+    ],
+    "lie_index": 2
+  },
+  "set10": {
+    "statements": [
+      "AI stands for Artificial Intelligence.",
+      "Bitcoin is stored in a physical wallet.",
+      "Most programming languages use syntax rules."
+    ],
+    "lie_index": 1
+  }
+    },
+    "History": {
+        "set1": {
+            "statements": [
+                "The Great Fire of London occurred in 1666.",
+                "The Declaration of Independence was signed in 1776.",
+                "The Roman Empire lasted over 2,000 years."
+            ],
+            "lie_index": 2
+        },
+        "set2": {
+            "statements": [
+                "Napoleon was exiled to an island twice.",
+                "World War I began in 1914.",
+                "The Cold War involved direct combat between the U.S. and U.S.S.R."
+            ],
+            "lie_index": 2
+        },
+        "set3": {
+            "statements": [
+                "The Berlin Wall fell in 1989.",
+                "Cleopatra was Egyptian by blood.",
+                "The Titanic sank in 1912."
+            ],
+            "lie_index": 1
+        },
+        "set4": {
+            "statements": [
+                "Martin Luther King Jr. gave his \"I Have a Dream\" speech in Washington, D.C.",
+                "The Wright brothers were the first to invent the printing press.",
+                "The pyramids were built thousands of years before Jesus was born."
+            ],
+            "lie_index": 1
+        },
+        "set5": {
+            "statements": [
+                "Julius Caesar was assassinated in Rome.",
+                "Genghis Khan created the largest land empire in history.",
+                "The American Civil War ended in 1915."
+            ],
+            "lie_index": 2
+        },
+        "set6": {
+    "statements": [
+      "The Great Wall of China can be seen from the Moon.",
+      "Abraham Lincoln was the 16th President of the U.S.",
+      "The Renaissance began in Italy."
+    ],
+    "lie_index": 0
+  },
+  "set7": {
+    "statements": [
+      "The Black Death occurred in the 14th century.",
+      "World War II ended in 1945.",
+      "The Declaration of Independence was signed in France."
+    ],
+    "lie_index": 2
+  },
+  "set8": {
+    "statements": [
+      "The Colosseum is located in Greece.",
+      "Julius Caesar played a role in ending the Roman Republic.",
+      "The Berlin Wall separated East and West Berlin."
+    ],
+    "lie_index": 0
+  },
+  "set9": {
+    "statements": [
+      "Christopher Columbus sailed in 1492.",
+      "Queen Elizabeth I was the daughter of Henry VIII.",
+      "The Cold War ended with the fall of the Soviet Union in 1965."
+    ],
+    "lie_index": 2
+  },
+  "set10": {
+    "statements": [
+      "The U.S. Civil Rights Act was passed in 1964.",
+      "The French Revolution began in 1789.",
+      "Albert Einstein discovered gravity."
+    ],
+    "lie_index": 2
+  }
+    }
+
+}
