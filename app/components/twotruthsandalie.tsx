@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState, useRef } from "react";
 
-// --- Types ---
 type SentenceSet = {
   statements: string[];
   lie_index: number;
@@ -14,14 +13,12 @@ type SentencesData = {
   };
 };
 
-// --- Constants ---
 const CATEGORY_TIME_LIMIT = 60;
 const NEXT_SET_DELAY = 1500;
 const WRONG_ANSWER_PENALTY_MS = 3000;
 const MIN_CORRECT_TO_PASS = 7;
 const SETS_PER_CATEGORY = 10;
 
-// --- Utility ---
 function shuffleArray<T>(array: T[]): T[] {
   const arr = [...array];
   for (let i = arr.length - 1; i > 0; i--) {
@@ -31,12 +28,11 @@ function shuffleArray<T>(array: T[]): T[] {
   return arr;
 }
 
-// --- Styled Components ---
 const colors = {
   primary: "#2D6A4F",
   secondary: "#40916C",
   accent: "#F9C74F",
-  background: "#F8F9FA",
+  background: "linear-gradient(135deg, #e0ffe7 0%, #f9fbe7 50%, #fffbe7 100%)",
   card: "#FFFFFF",
   correct: "#43AA8B",
   incorrect: "#F94144",
@@ -44,6 +40,8 @@ const colors = {
   border: "#DEE2E6",
   text: "#212529",
   timer: "#F3722C",
+  shadow: "0 8px 32px 0 rgba(44,62,80,0.13)",
+  glass: "rgba(255,255,255,0.75)",
 };
 
 function Card({ children, style = {}, ...props }: React.HTMLAttributes<HTMLDivElement>) {
@@ -51,12 +49,15 @@ function Card({ children, style = {}, ...props }: React.HTMLAttributes<HTMLDivEl
     <div
       className="ttal-card-anim"
       style={{
-        background: colors.card,
-        borderRadius: 16,
-        boxShadow: "0 4px 24px rgba(44,62,80,0.08)",
-        padding: 32,
+        background: colors.glass,
+        borderRadius: 24,
+        boxShadow: colors.shadow,
+        padding: 60,
         margin: "0 auto",
-        maxWidth: 520,
+        minHeight: 600,
+        fontSize: "115%",
+        backdropFilter: "blur(8px)",
+        border: `1.5px solid ${colors.border}`,
         ...style,
       }}
       {...props}
@@ -81,13 +82,15 @@ function Button({
         background: disabled ? colors.disabled : color,
         color: disabled ? "#888" : "#fff",
         border: "none",
-        borderRadius: 8,
-        padding: "12px 28px",
-        fontSize: 18,
-        fontWeight: 600,
+        borderRadius: 12,
+        padding: "16px 36px",
+        fontSize: 22,
+        fontWeight: 700,
         cursor: disabled ? "not-allowed" : "pointer",
-        boxShadow: disabled ? "none" : "0 2px 8px rgba(44,62,80,0.07)",
-        transition: "background 0.15s, color 0.15s, transform 0.15s",
+        boxShadow: disabled ? "none" : "0 4px 16px rgba(44,62,80,0.10)",
+        transition: "background 0.18s, color 0.18s, transform 0.15s, box-shadow 0.18s",
+        letterSpacing: "0.7px",
+        outline: "none",
         ...style,
       }}
       {...props}
@@ -113,20 +116,24 @@ function StatementButton({
   let border = colors.border;
   let color = colors.text;
   let animClass = "";
+  let boxShadow = "0 2px 12px rgba(44,62,80,0.04)";
   if (selected && correct) {
     bg = colors.correct;
     color = "#fff";
     border = colors.correct;
     animClass = "ttal-bounce";
+    boxShadow = "0 4px 24px rgba(67,170,139,0.18)";
   } else if (selected && incorrect) {
     bg = colors.incorrect;
     color = "#fff";
     border = colors.incorrect;
     animClass = "ttal-shake";
+    boxShadow = "0 4px 24px rgba(249,65,68,0.13)";
   } else if (selected) {
     bg = colors.accent;
     border = colors.accent;
     animClass = "ttal-pulse";
+    boxShadow = "0 2px 12px rgba(249,199,79,0.13)";
   }
   return (
     <button
@@ -135,25 +142,43 @@ function StatementButton({
       style={{
         width: "100%",
         textAlign: "left",
-        marginBottom: 14,
-        padding: "18px 20px",
+        marginBottom: 18,
+        padding: "24px 28px",
         background: bg,
         color,
-        border: `2px solid ${border}`,
-        borderRadius: 10,
-        fontSize: 18,
-        fontWeight: 500,
+        border: `2.5px solid ${border}`,
+        borderRadius: 16,
+        fontSize: 22,
+        fontWeight: 600,
         cursor: disabled ? "not-allowed" : "pointer",
-        boxShadow: selected
-          ? "0 2px 12px rgba(67,170,139,0.10)"
-          : "0 1px 4px rgba(44,62,80,0.04)",
-        transition: "background 0.15s, color 0.15s, border 0.15s, transform 0.18s",
-        outline: selected ? `2px solid ${colors.accent}` : "none",
-        opacity: disabled && !selected ? 0.7 : 1,
+        boxShadow,
+        transition: "background 0.18s, color 0.18s, border 0.18s, transform 0.18s, box-shadow 0.18s",
+        outline: selected ? `2.5px solid ${colors.accent}` : "none",
+        opacity: disabled && !selected ? 0.6 : 1,
+        position: "relative",
+        overflow: "hidden",
       }}
       {...props}
     >
-      {children}
+      <span style={{ position: "relative", zIndex: 2 }}>{children}</span>
+      {selected && (
+        <span
+          style={{
+            position: "absolute",
+            right: 18,
+            top: "50%",
+            transform: "translateY(-50%)",
+            fontSize: 28,
+            fontWeight: 700,
+            opacity: 0.85,
+            zIndex: 3,
+            pointerEvents: "none",
+            userSelect: "none",
+          }}
+        >
+          {correct ? "✔️" : incorrect ? "❌" : "⭐"}
+        </span>
+      )}
     </button>
   );
 }
@@ -177,24 +202,28 @@ function Modal({
         left: 0,
         width: "100vw",
         height: "100vh",
-        background: "rgba(44,62,80,0.18)",
+        background: "rgba(44,62,80,0.22)",
         zIndex: 1000,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        backdropFilter: "blur(2.5px)",
         ...style,
       }}
     >
       <div
         className="ttal-modal-content-anim"
         style={{
-          background: colors.card,
-          borderRadius: 18,
-          padding: 40,
-          minWidth: 340,
-          maxWidth: "90vw",
-          boxShadow: "0 4px 32px rgba(44,62,80,0.18)",
+          background: colors.glass,
+          borderRadius: 28,
+          padding: 56,
+          minWidth: 410,
+          maxWidth: "92vw",
+          boxShadow: "0 8px 40px rgba(44,62,80,0.22)",
           textAlign: "center",
+          fontSize: "120%",
+          border: `2px solid ${colors.border}`,
+          backdropFilter: "blur(8px)",
         }}
       >
         {children}
@@ -203,7 +232,6 @@ function Modal({
   );
 }
 
-// --- Animation CSS ---
 if (typeof window !== "undefined" && !document.getElementById("ttal-animations")) {
   const style = document.createElement("style");
   style.id = "ttal-animations";
@@ -214,22 +242,22 @@ if (typeof window !== "undefined" && !document.getElementById("ttal-animations")
     }
     @keyframes ttalBounce {
       0% { transform: scale(1);}
-      30% { transform: scale(1.12);}
-      50% { transform: scale(0.96);}
-      70% { transform: scale(1.04);}
+      30% { transform: scale(1.14);}
+      50% { transform: scale(0.95);}
+      70% { transform: scale(1.06);}
       100% { transform: scale(1);}
     }
     @keyframes ttalShake {
       0% { transform: translateX(0);}
-      20% { transform: translateX(-8px);}
-      40% { transform: translateX(8px);}
-      60% { transform: translateX(-6px);}
-      80% { transform: translateX(6px);}
+      20% { transform: translateX(-10px);}
+      40% { transform: translateX(10px);}
+      60% { transform: translateX(-7px);}
+      80% { transform: translateX(7px);}
       100% { transform: translateX(0);}
     }
     @keyframes ttalPulse {
-      0% { box-shadow: 0 0 0 0 rgba(249,199,79,0.5);}
-      70% { box-shadow: 0 0 0 10px rgba(249,199,79,0);}
+      0% { box-shadow: 0 0 0 0 rgba(249,199,79,0.6);}
+      70% { box-shadow: 0 0 0 16px rgba(249,199,79,0);}
       100% { box-shadow: 0 0 0 0 rgba(249,199,79,0);}
     }
     @keyframes ttalModalFadeIn {
@@ -237,31 +265,31 @@ if (typeof window !== "undefined" && !document.getElementById("ttal-animations")
       to { opacity: 1; transform: scale(1);}
     }
     .ttal-card-anim {
-      animation: ttalFadeIn 0.5s cubic-bezier(.23,1.01,.32,1) both;
+      animation: ttalFadeIn 0.6s cubic-bezier(.23,1.01,.32,1) both;
     }
     .ttal-btn-anim {
-      transition: transform 0.13s;
+      transition: transform 0.15s;
     }
     .ttal-btn-anim:active:not(:disabled) {
-      transform: scale(0.96);
+      transform: scale(0.97);
     }
     .ttal-statement-anim {
-      animation: ttalFadeIn 0.5s cubic-bezier(.23,1.01,.32,1) both;
+      animation: ttalFadeIn 0.6s cubic-bezier(.23,1.01,.32,1) both;
     }
     .ttal-bounce {
-      animation: ttalBounce 0.45s cubic-bezier(.23,1.01,.32,1);
+      animation: ttalBounce 0.5s cubic-bezier(.23,1.01,.32,1);
     }
     .ttal-shake {
-      animation: ttalShake 0.38s cubic-bezier(.36,.07,.19,.97);
+      animation: ttalShake 0.42s cubic-bezier(.36,.07,.19,.97);
     }
     .ttal-pulse {
-      animation: ttalPulse 0.7s;
+      animation: ttalPulse 0.8s;
     }
     .ttal-modal-fade {
-      animation: ttalFadeIn 0.35s cubic-bezier(.23,1.01,.32,1) both;
+      animation: ttalFadeIn 0.4s cubic-bezier(.23,1.01,.32,1) both;
     }
     .ttal-modal-content-anim {
-      animation: ttalModalFadeIn 0.38s cubic-bezier(.23,1.01,.32,1) both;
+      animation: ttalModalFadeIn 0.44s cubic-bezier(.23,1.01,.32,1) both;
     }
     .ttal-timer-anim {
       transition: color 0.18s;
@@ -275,9 +303,8 @@ if (typeof window !== "undefined" && !document.getElementById("ttal-animations")
       50% { color: #fff; }
     }
     .ttal-result-anim {
-      animation: ttalFadeIn 0.5s cubic-bezier(.23,1.01,.32,1) both;
+      animation: ttalFadeIn 0.6s cubic-bezier(.23,1.01,.32,1) both;
     }
-    /* Penalty animation */
     @keyframes ttalPenaltyAnim {
       0% {
         opacity: 0;
@@ -285,15 +312,15 @@ if (typeof window !== "undefined" && !document.getElementById("ttal-animations")
       }
       10% {
         opacity: 1;
-        transform: translateY(-8px) scale(1.1);
+        transform: translateY(-10px) scale(1.13);
       }
       60% {
         opacity: 1;
-        transform: translateY(-18px) scale(1.1);
+        transform: translateY(-22px) scale(1.13);
       }
       100% {
         opacity: 0;
-        transform: translateY(-32px) scale(0.9);
+        transform: translateY(-38px) scale(0.9);
       }
     }
     .ttal-penalty-anim {
@@ -301,13 +328,67 @@ if (typeof window !== "undefined" && !document.getElementById("ttal-animations")
       pointer-events: none;
       user-select: none;
     }
+    /* Custom scrollbar for category list */
+    .ttal-category-scroll::-webkit-scrollbar {
+      height: 10px;
+    }
+    .ttal-category-scroll::-webkit-scrollbar-thumb {
+      background: #e0ffe7;
+      border-radius: 8px;
+    }
+    /* --- Connected Design Additions --- */
+    .ttal-connector-bar {
+      width: 4px;
+      min-height: 40px;
+      background: linear-gradient(180deg, #43AA8B 0%, #F9C74F 100%);
+      margin: 0 auto;
+      border-radius: 2px;
+      box-shadow: 0 2px 8px #e0ffe7;
+      opacity: 0.7;
+      margin-bottom: 24px;
+      margin-top: 24px;
+    }
+    .ttal-connector-dot {
+      width: 18px;
+      height: 18px;
+      background: #F9C74F;
+      border: 3px solid #43AA8B;
+      border-radius: 50%;
+      margin: 0 auto;
+      margin-bottom: 8px;
+      box-shadow: 0 2px 8px #e0ffe7;
+    }
+    .ttal-connector-dot.completed {
+      background: #43AA8B;
+      border-color: #F9C74F;
+    }
+    .ttal-category-connector-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 32px;
+      margin-top: 12px;
+    }
+    .ttal-category-connector-label {
+      font-size: 15px;
+      color: #40916C;
+      font-weight: 700;
+      text-align: center;
+      margin-top: 2px;
+      letter-spacing: 0.5px;
+      text-shadow: 0 1px 4px #fff;
+      min-width: 80px;
+      max-width: 120px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   `;
   document.head.appendChild(style);
 }
 
-// --- Main Component ---
 export default function TwoTruthsAndALie() {
-  // --- State ---
   const [sentences, setSentences] = useState<SentencesData | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -330,15 +411,12 @@ export default function TwoTruthsAndALie() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [completedSets, setCompletedSets] = useState<{ [category: string]: Set<string> }>({});
 
-  // Penalty animation state
   const [showPenalty, setShowPenalty] = useState(false);
   const penaltyTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const timerIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const nextSetTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // --- Effects ---
-  // Load digital-7 font
   useEffect(() => {
     const font = document.createElement("link");
     font.rel = "stylesheet";
@@ -364,7 +442,6 @@ export default function TwoTruthsAndALie() {
     };
   }, []);
 
-  // Fetch sentences.json
   useEffect(() => {
     fetch("/sentences.json")
       .then((res) => res.json())
@@ -374,7 +451,6 @@ export default function TwoTruthsAndALie() {
       });
   }, []);
 
-  // Timer effect
   useEffect(() => {
     if (timerActive && timerMs > 0) {
       timerIntervalRef.current = setInterval(() => {
@@ -395,7 +471,6 @@ export default function TwoTruthsAndALie() {
     };
   }, [timerActive, timerMs]);
 
-  // When a category is selected, prepare its set keys and start with the first set
   useEffect(() => {
     if (selectedCategory && sentences) {
       const setKeys = Object.keys(sentences[selectedCategory]);
@@ -414,7 +489,6 @@ export default function TwoTruthsAndALie() {
     }
   }, [selectedCategory, sentences]);
 
-  // When currentSetIndex changes, load the corresponding set
   useEffect(() => {
     if (
       selectedCategory &&
@@ -438,7 +512,6 @@ export default function TwoTruthsAndALie() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentSetIndex, categorySetKeys, selectedCategory, sentences]);
 
-  // Auto-advance to next set after answer (with delay)
   useEffect(() => {
     if (result === "timeout") return;
 
@@ -500,7 +573,6 @@ export default function TwoTruthsAndALie() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [result]);
 
-  // --- Handlers ---
   function handleStatementClick(idx: number) {
     if (result || !timerActive) return;
     setSelectedStatement(idx);
@@ -520,7 +592,6 @@ export default function TwoTruthsAndALie() {
       setResult("incorrect");
       setCategoryIncorrectCount((prev) => prev + 1);
 
-      // Show penalty animation
       setShowPenalty(true);
       if (penaltyTimeoutRef.current) clearTimeout(penaltyTimeoutRef.current);
       penaltyTimeoutRef.current = setTimeout(() => setShowPenalty(false), 1000);
@@ -587,13 +658,12 @@ export default function TwoTruthsAndALie() {
     setCategoryPassed(false);
   }
 
-  // --- UI Helpers ---
   function formatTimer(ms: number) {
     const totalSeconds = Math.floor(ms / 1000);
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
     const centiseconds = Math.floor((ms % 1000) / 10);
-    // Animate timer color when < 10s left
+
     const timerClass =
       ms < 10000
         ? "ttal-timer-anim ttal-timer-blink"
@@ -603,17 +673,23 @@ export default function TwoTruthsAndALie() {
         className={timerClass}
         style={{
           fontFamily: "'Digital-7', monospace",
-          fontSize: 38,
+          fontSize: 48,
           color: colors.timer,
+          background: "rgba(255,255,255,0.7)",
+          borderRadius: 10,
+          padding: "2px 16px",
+          boxShadow: "0 2px 8px rgba(44,62,80,0.08)",
+          marginLeft: 6,
+          letterSpacing: "1.5px",
         }}
       >
         {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}.
-        <span style={{ fontSize: 24 }}>{String(centiseconds).padStart(2, "0")}</span>
+        <span style={{ fontSize: 30 }}>{String(centiseconds).padStart(2, "0")}</span>
       </span>
     );
   }
 
-  // --- Modals ---
+
   function TimeoutModal() {
     return (
       <Modal open={result === "timeout"}>
@@ -621,22 +697,24 @@ export default function TwoTruthsAndALie() {
           className="ttal-result-anim"
           style={{
             color: colors.incorrect,
-            fontWeight: 700,
-            fontSize: 26,
-            marginBottom: 10,
+            fontWeight: 800,
+            fontSize: 34,
+            marginBottom: 16,
+            letterSpacing: "0.7px",
+            textShadow: "0 2px 8px #fff, 0 1px 0 #fff",
           }}
         >
           ⏰ Time&apos;s up!
         </div>
-        <div className="ttal-result-anim" style={{ marginBottom: 18, fontSize: 18 }}>
+        <div className="ttal-result-anim" style={{ marginBottom: 24, fontSize: 22 }}>
           You got <b>{categoryCorrectCount}</b> out of <b>{categorySetKeys.length || SETS_PER_CATEGORY}</b> correct.<br />
           <span style={{ color: "#888" }}>
             You need at least <b>{MIN_CORRECT_TO_PASS}</b> correct to pass.
           </span>
         </div>
-        <div style={{ display: "flex", justifyContent: "center", gap: 16 }}>
+        <div style={{ display: "flex", justifyContent: "center", gap: 22 }}>
           <Button onClick={handleTryAgain} color={colors.secondary}>
-            Try Again
+            🔄 Try Again
           </Button>
           <Button onClick={handleBackToCategories} color={colors.disabled} style={{ color: colors.text }}>
             Back to Categories
@@ -665,14 +743,16 @@ export default function TwoTruthsAndALie() {
               className="ttal-result-anim"
               style={{
                 color: colors.correct,
-                fontWeight: 700,
-                fontSize: 26,
-                marginBottom: 10,
+                fontWeight: 800,
+                fontSize: 34,
+                marginBottom: 16,
+                letterSpacing: "0.7px",
+                textShadow: "0 2px 8px #fff, 0 1px 0 #fff",
               }}
             >
               🎉 Category Passed!
             </div>
-            <div className="ttal-result-anim" style={{ marginBottom: 18, fontSize: 18 }}>
+            <div className="ttal-result-anim" style={{ marginBottom: 24, fontSize: 22 }}>
               You got <b>{categoryCorrectCount}</b> out of <b>{categorySetKeys.length || SETS_PER_CATEGORY}</b> correct.
             </div>
             <Button onClick={handleBackToCategories} color={colors.correct}>
@@ -685,25 +765,27 @@ export default function TwoTruthsAndALie() {
               className="ttal-result-anim"
               style={{
                 color: colors.incorrect,
-                fontWeight: 700,
-                fontSize: 26,
-                marginBottom: 10,
+                fontWeight: 800,
+                fontSize: 34,
+                marginBottom: 16,
+                letterSpacing: "0.7px",
+                textShadow: "0 2px 8px #fff, 0 1px 0 #fff",
               }}
             >
               ❌ Category Failed
             </div>
-            <div className="ttal-result-anim" style={{ marginBottom: 18, fontSize: 18 }}>
+            <div className="ttal-result-anim" style={{ marginBottom: 24, fontSize: 22 }}>
               You got <b>{categoryCorrectCount}</b> out of <b>{categorySetKeys.length || SETS_PER_CATEGORY}</b> correct.<br />
               <span style={{ color: "#888" }}>
                 You need at least <b>{MIN_CORRECT_TO_PASS}</b> correct to pass.
               </span>
             </div>
-            <div style={{ display: "flex", justifyContent: "center", gap: 16 }}>
+            <div style={{ display: "flex", justifyContent: "center", gap: 22 }}>
               <Button
                 onClick={() => handleRetryCategory(lastCategory!)}
                 color={colors.secondary}
               >
-                Try Again
+                🔄 Try Again
               </Button>
               <Button
                 onClick={handleBackToCategories}
@@ -719,7 +801,6 @@ export default function TwoTruthsAndALie() {
     );
   }
 
-  // --- Main Render ---
   if (loading) {
     return (
       <div
@@ -728,11 +809,14 @@ export default function TwoTruthsAndALie() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontSize: 22,
+          fontSize: 28,
           color: colors.primary,
+          background: colors.background,
         }}
       >
-        <span className="ttal-result-anim">Loading...</span>
+        <span className="ttal-result-anim" style={{ fontWeight: 700, letterSpacing: "0.7px" }}>
+          <span style={{ fontSize: 38, marginRight: 10 }}>⏳</span> Loading...
+        </span>
       </div>
     );
   }
@@ -745,37 +829,53 @@ export default function TwoTruthsAndALie() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontSize: 22,
+          fontSize: 28,
           color: colors.incorrect,
+          background: colors.background,
         }}
       >
-        <span className="ttal-result-anim">Error loading questions.</span>
+        <span className="ttal-result-anim" style={{ fontWeight: 700, letterSpacing: "0.7px" }}>
+          <span style={{ fontSize: 38, marginRight: 10 }}>⚠️</span> Error loading questions.
+        </span>
       </div>
     );
   }
 
   const allCategories = Object.keys(sentences);
 
+
+  const gradientBackground = {
+    minHeight: "100vh",
+    background: colors.background,
+    padding: "0 0 80px 0",
+    fontSize: "115%",
+    fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif",
+    backgroundAttachment: "fixed",
+  };
+
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: colors.background,
-        padding: "0 0 64px 0",
-      }}
-    >
-      <div style={{ maxWidth: 700,  margin: "0 auto", padding: "40px 16px 0 16px" }}>
+    <div style={gradientBackground}>
+      <div
+        style={{
+          maxWidth: 980,
+          margin: "0 auto",
+          padding: "56px 24px 0 24px",
+        }}
+      >
         <h1
           className="ttal-result-anim"
           style={{
-            fontSize: 38,
-            fontWeight: 800,
+            fontSize: 54,
+            fontWeight: 900,
             color: colors.primary,
-            letterSpacing: "-1px",
-            marginBottom: 8,
+            letterSpacing: "-1.5px",
+            marginBottom: 12,
             textAlign: "center",
+            textShadow: "0 2px 8px #fff, 0 1px 0 #fff",
+            lineHeight: 1.1,
           }}
         >
+          <span style={{ color: colors.accent, fontSize: 44, marginRight: 10 }}>🎭</span>
           Two Truths and a Lie
         </h1>
         <div
@@ -783,27 +883,36 @@ export default function TwoTruthsAndALie() {
           style={{
             textAlign: "center",
             color: colors.secondary,
-            fontSize: 20,
-            marginBottom: 32,
-            fontWeight: 500,
+            fontSize: 26,
+            marginBottom: 44,
+            fontWeight: 600,
+            letterSpacing: "0.5px",
+            textShadow: "0 1px 4px #fff",
           }}
         >
-          Spot the lie in each set. Can you pass every category?
+          Spot the <span style={{ color: colors.accent, fontWeight: 800 }}>lie</span> in each set.<br />
+          Can you pass every category?
         </div>
+
+
+        
+
         <CategoryResultModal />
         <TimeoutModal />
 
-        {/* Category Selector */}
+      
         {!selectedCategory && !categoryFailed && !categoryPassed && (
-          <Card style={{ marginBottom: 32 }}>
-            <div className="ttal-result-anim" style={{ fontWeight: 700, fontSize: 22, marginBottom: 18, color: colors.primary }}>
+          <Card style={{ marginBottom: 44, background: "rgba(255,255,255,0.92)", boxShadow: "0 8px 32px 0 rgba(44,62,80,0.13)" }}>
+            <div className="ttal-result-anim" style={{ fontWeight: 800, fontSize: 28, marginBottom: 24, color: colors.primary, letterSpacing: "0.7px" }}>
+              <span style={{ fontSize: 28, marginRight: 8 }}>📚</span>
               Select a Category
             </div>
             <div
+              className="ttal-category-scroll"
               style={{
                 display: "flex",
                 flexWrap: "wrap",
-                gap: 16,
+                gap: 20,
                 justifyContent: "center",
               }}
             >
@@ -818,19 +927,30 @@ export default function TwoTruthsAndALie() {
                       : colors.secondary
                   }
                   style={{
-                    opacity: completedCategories.includes(cat) ? 0.6 : 1,
-                    minWidth: 140,
-                    marginBottom: 8,
-                    fontWeight: 700,
-                    fontSize: 18,
-                    letterSpacing: "0.5px",
-                    animationDelay: `${i * 0.06 + 0.1}s`,
+                    opacity: completedCategories.includes(cat) ? 0.5 : 1,
+                    width: 200,
+                    fontWeight: 800,
+                    fontSize: 22,
+                    letterSpacing: "0.7px",
+                    animationDelay: `${i * 0.066 + 0.11}s`,
                     animationName: "ttalFadeIn",
-                    animationDuration: "0.5s",
+                    animationDuration: "0.6s",
                     animationFillMode: "both",
+                    border: completedCategories.includes(cat)
+                      ? `2.5px solid ${colors.correct}`
+                      : `2.5px solid ${colors.secondary}`,
+                    background: completedCategories.includes(cat)
+                      ? "linear-gradient(90deg, #e0ffe7 0%, #b7f7d8 100%)"
+                      : "linear-gradient(90deg, #f9fbe7 0%, #e9f5ee 100%)",
+                    color: completedCategories.includes(cat)
+                      ? colors.primary
+                      : colors.secondary,
+                    boxShadow: completedCategories.includes(cat)
+                      ? "0 2px 12px rgba(67,170,139,0.10)"
+                      : "0 2px 12px rgba(44,62,80,0.04)",
                   }}
                 >
-                  {cat}
+                  <span style={{ fontWeight: 800 }}>{cat}</span>
                   {completedCategories.includes(cat) ? " ✔️" : ""}
                 </Button>
               ))}
@@ -839,11 +959,13 @@ export default function TwoTruthsAndALie() {
               <div
                 className="ttal-result-anim"
                 style={{
-                  marginTop: 24,
-                  fontWeight: 700,
+                  marginTop: 32,
+                  fontWeight: 800,
                   color: colors.correct,
-                  fontSize: 20,
+                  fontSize: 26,
                   textAlign: "center",
+                  letterSpacing: "0.7px",
+                  textShadow: "0 1px 4px #fff",
                 }}
               >
                 🎊 Congratulations! You have completed all categories!
@@ -852,39 +974,55 @@ export default function TwoTruthsAndALie() {
           </Card>
         )}
 
-        {/* Game Card */}
+       
         {selectedCategory && currentSet && (
           <Card>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginBottom: 10,
-              }}
-            >
-              <div
-                className="ttal-result-anim"
-                style={{
-                  fontWeight: 700,
-                  fontSize: 22,
-                  color: colors.primary,
-                  letterSpacing: "0.5px",
-                }}
-              >
-                {selectedCategory}
+            <div style={{ marginBottom: 24 }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 0 }}>
+                {categorySetKeys.map((setKey, idx) => (
+                  <React.Fragment key={setKey}>
+                    <div
+                      className="ttal-connector-dot"
+                      style={{
+                        background:
+                          idx < currentSetIndex
+                            ? colors.correct
+                            : idx === currentSetIndex
+                            ? colors.accent
+                            : "#fff",
+                        borderColor:
+                          idx < currentSetIndex
+                            ? colors.accent
+                            : colors.correct,
+                        opacity: idx === currentSetIndex ? 1 : 0.7,
+                        transition: "background 0.2s, border 0.2s, opacity 0.2s",
+                        width: 16,
+                        height: 16,
+                        marginBottom: 0,
+                      }}
+                      title={`Set ${idx + 1}`}
+                    />
+                    {idx < categorySetKeys.length - 1 && (
+                      <div
+                        className="ttal-connector-bar"
+                        style={{
+                          width: 24,
+                          minHeight: 4,
+                          background:
+                            idx < currentSetIndex
+                              ? `linear-gradient(90deg, ${colors.correct} 0%, ${colors.accent} 100%)`
+                              : `linear-gradient(90deg, #e0ffe7 0%, #f9fbe7 100%)`,
+                          margin: "0 2px",
+                          borderRadius: 2,
+                          boxShadow: "0 1px 4px #e0ffe7",
+                          opacity: 0.7,
+                        }}
+                      />
+                    )}
+                  </React.Fragment>
+                ))}
               </div>
-              <div
-                className="ttal-result-anim"
-                style={{
-                  fontWeight: 500,
-                  fontSize: 16,
-                  color: colors.secondary,
-                  background: "#e9f5ee",
-                  borderRadius: 8,
-                  padding: "4px 14px",
-                }}
-              >
+              <div style={{ textAlign: "center", color: colors.secondary, fontWeight: 700, fontSize: 15, marginTop: 4 }}>
                 Set {currentSetIndex + 1} / {categorySetKeys.length}
               </div>
             </div>
@@ -892,17 +1030,39 @@ export default function TwoTruthsAndALie() {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: 18,
-                marginBottom: 10,
+                justifyContent: "space-between",
+                marginBottom: 16,
+              }}
+            >
+              <div
+                className="ttal-result-anim"
+                style={{
+                  fontWeight: 800,
+                  fontSize: 28,
+                  color: colors.primary,
+                  letterSpacing: "0.7px",
+                  textShadow: "0 1px 4px #fff",
+                }}
+              >
+                <span style={{ color: colors.accent, fontSize: 24, marginRight: 8 }}>📂</span>
+                {selectedCategory}
+              </div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 24,
+                marginBottom: 16,
                 flexWrap: "wrap",
               }}
             >
-              <div className="ttal-result-anim" style={{ fontWeight: 600, color: colors.text }}>
+              <div className="ttal-result-anim" style={{ fontWeight: 700, color: colors.text, fontSize: 20 }}>
                 <span style={{ color: colors.secondary }}>Score:</span>{" "}
                 <span style={{ color: colors.primary }}>
                   {categoryCorrectCount} correct
                 </span>
-                <span style={{ color: colors.incorrect, marginLeft: 8 }}>
+                <span style={{ color: colors.incorrect, marginLeft: 12 }}>
                   {categoryIncorrectCount} incorrect
                 </span>
               </div>
@@ -910,9 +1070,10 @@ export default function TwoTruthsAndALie() {
                 className="ttal-result-anim"
                 style={{
                   color: "#888",
-                  fontSize: 14,
-                  fontWeight: 500,
-                  marginLeft: 8,
+                  fontSize: 17,
+                  fontWeight: 600,
+                  marginLeft: 12,
+                  letterSpacing: "0.3px",
                 }}
               >
                 (Need {MIN_CORRECT_TO_PASS} correct to pass)
@@ -921,15 +1082,15 @@ export default function TwoTruthsAndALie() {
             <div
               className="ttal-result-anim"
               style={{
-                marginBottom: 18,
+                marginBottom: 24,
                 display: "flex",
                 alignItems: "center",
-                gap: 10,
+                gap: 16,
                 position: "relative",
-                minHeight: 48, // to avoid layout shift when animating
+                minHeight: 60,
               }}
             >
-              <span style={{ fontWeight: 600, color: colors.text }}>Time left:</span>
+              <span style={{ fontWeight: 700, color: colors.text, fontSize: 20 }}>Time left:</span>
               <span style={{ position: "relative", display: "inline-block" }}>
                 {formatTimer(timerMs)}
                 {showPenalty && (
@@ -937,17 +1098,17 @@ export default function TwoTruthsAndALie() {
                     className="ttal-penalty-anim"
                     style={{
                       position: "absolute",
-                      left: "110px",
-                      right: "0 ",
+                      left: "180px",
+                      right: "0",
                       top: "50%",
-                      marginLeft: 8,
+                      marginLeft: 12,
                       transform: "translateY(-50%)",
                       color: colors.incorrect,
-                      fontWeight: 700,
-                      fontSize: 22,
+                      fontWeight: 800,
+                      fontSize: 28,
                       pointerEvents: "none",
                       userSelect: "none",
-                      textShadow: "0 2px 8px #fff, 0 1px 0 #fff",
+                      textShadow: "0 2.2px 8.8px #fff, 0 1.1px 0 #fff",
                     }}
                   >
                     -3s
@@ -957,7 +1118,7 @@ export default function TwoTruthsAndALie() {
             </div>
             {result !== "timeout" && (
               <>
-                <div style={{ marginBottom: 10 }}>
+                <div style={{ marginBottom: 16 }}>
                   {shuffledStatements.map((statement, idx) => (
                     <StatementButton
                       key={idx}
@@ -972,14 +1133,15 @@ export default function TwoTruthsAndALie() {
                   ))}
                 </div>
                 {result && (
-                  <div className="ttal-result-anim" style={{ marginTop: 18, textAlign: "center" }}>
+                  <div className="ttal-result-anim" style={{ marginTop: 24, textAlign: "center" }}>
                     {result === "correct" ? (
                       <span
                         style={{
                           color: colors.correct,
-                          fontWeight: 700,
-                          fontSize: 20,
-                          letterSpacing: "0.5px",
+                          fontWeight: 800,
+                          fontSize: 26,
+                          letterSpacing: "0.7px",
+                          textShadow: "0 1px 4px #fff",
                         }}
                       >
                         ✅ Correct! You found the lie.
@@ -988,9 +1150,10 @@ export default function TwoTruthsAndALie() {
                       <span
                         style={{
                           color: colors.incorrect,
-                          fontWeight: 700,
-                          fontSize: 20,
-                          letterSpacing: "0.5px",
+                          fontWeight: 800,
+                          fontSize: 26,
+                          letterSpacing: "0.7px",
+                          textShadow: "0 1px 4px #fff",
                         }}
                       >
                         ❌ Incorrect. The lie was:{" "}
@@ -1003,17 +1166,21 @@ export default function TwoTruthsAndALie() {
                 )}
               </>
             )}
-            <div style={{ marginTop: 28, textAlign: "center" }}>
+            <div style={{ marginTop: 38, textAlign: "center" }}>
               <Button
                 onClick={handleBackToCategories}
                 color={colors.disabled}
                 style={{
                   color: colors.text,
-                  fontSize: 16,
-                  fontWeight: 600,
-                  padding: "8px 20px",
-                  borderRadius: 6,
-                  marginTop: 4,
+                  fontSize: 20,
+                  fontWeight: 700,
+                  padding: "12px 28px",
+                  borderRadius: 10,
+                  marginTop: 8,
+                  background: "#f8f9fa",
+                  border: `1.5px solid ${colors.border}`,
+                  boxShadow: "0 1px 4px #e0ffe7",
+                  letterSpacing: "0.5px",
                 }}
               >
                 ← Back to Categories
