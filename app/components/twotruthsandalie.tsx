@@ -572,7 +572,6 @@ export default function TwoTruthsAndALie() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [result]);
-
   function handleStatementClick(idx: number) {
     if (result || !timerActive) return;
     setSelectedStatement(idx);
@@ -821,6 +820,7 @@ export default function TwoTruthsAndALie() {
     );
   }
 
+
   if (!sentences) {
     return (
       <div
@@ -842,7 +842,6 @@ export default function TwoTruthsAndALie() {
   }
 
   const allCategories = Object.keys(sentences);
-
 
   const gradientBackground = {
     minHeight: "100vh",
@@ -900,7 +899,6 @@ export default function TwoTruthsAndALie() {
         <CategoryResultModal />
         <TimeoutModal />
 
-      
         {!selectedCategory && !categoryFailed && !categoryPassed && (
           <Card style={{ marginBottom: 44, background: "rgba(255,255,255,0.92)", boxShadow: "0 8px 32px 0 rgba(44,62,80,0.13)" }}>
             <div className="ttal-result-anim" style={{ fontWeight: 800, fontSize: 28, marginBottom: 24, color: colors.primary, letterSpacing: "0.7px" }}>
@@ -974,7 +972,6 @@ export default function TwoTruthsAndALie() {
           </Card>
         )}
 
-       
         {selectedCategory && currentSet && (
           <Card>
             <div style={{ marginBottom: 24 }}>
@@ -1116,6 +1113,7 @@ export default function TwoTruthsAndALie() {
                 )}
               </span>
             </div>
+
             {result !== "timeout" && (
               <>
                 <div style={{ marginBottom: 16 }}>
